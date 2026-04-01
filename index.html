@@ -3,263 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habitus</title>
+    <title>Habitus - Construa Hábitos Fortes</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0a0a0a">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { background: #0a0a0a; font-family: system-ui, sans-serif; }
-        .slide { display: none; }
-        .slide.active { display: block; }
-        .neon { text-shadow: 0 0 15px #22d3ee; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="text-gray-200 min-h-screen">
-
-    <!-- ONBOARDING -->
-    <div id="onboarding" class="fixed inset-0 bg-black z-50 flex flex-col">
-        <div class="flex-1 flex items-center justify-center p-6">
-            <div id="slides" class="max-w-md w-full text-center">
-                <!-- Slide 1 -->
+<body>
+    <!-- Onboarding (só primeira vez) -->
+    <div id="onboarding" class="onboarding">
+        <div class="onboarding-content">
+            <div id="slides">
                 <div class="slide active" id="slide1">
-                    <div class="text-6xl mb-8">🧠</div>
-                    <h1 class="text-5xl font-bold neon mb-4">Bem-vindo ao Habitus</h1>
-                    <p class="text-xl text-gray-400">Construa hábitos fortes e transforme sua rotina em disciplina diária.</p>
+                    <div class="emoji">🧠</div>
+                    <h1>Habitus</h1>
+                    <p>Construa hábitos fortes e domine sua rotina todos os dias.</p>
                 </div>
-
-                <!-- Slide 2 -->
                 <div class="slide" id="slide2">
-                    <div class="text-6xl mb-8">🔥</div>
-                    <h2 class="text-4xl font-bold mb-4">Gamificação que vicia</h2>
-                    <p class="text-gray-400">Ganhe XP, suba de level, mantenha streak e desbloqueie badges por consistência.</p>
+                    <div class="emoji">🔥</div>
+                    <h2>Gamificação Real</h2>
+                    <p>XP, Levels, Streak e Badges que te motivam a não parar nunca.</p>
                 </div>
-
-                <!-- Slide 3 -->
                 <div class="slide" id="slide3">
-                    <div class="text-6xl mb-8">⏰</div>
-                    <h2 class="text-4xl font-bold mb-4">Rotina + Foco</h2>
-                    <p class="text-gray-400">Checklist com horários, Time Blocking, Pomodoro integrado e templates prontos.</p>
+                    <div class="emoji">⏱️</div>
+                    <h2>Rotina + Foco</h2>
+                    <p>Checklist, Time Blocking, Pomodoro e templates prontos.</p>
                 </div>
-
-                <!-- Slide 4 -->
                 <div class="slide" id="slide4">
-                    <div class="text-6xl mb-8">📊</div>
-                    <h2 class="text-4xl font-bold mb-4">Veja seu progresso</h2>
-                    <p class="text-gray-400">Heatmap de hábitos, estatísticas, journal diário e reflexões.</p>
+                    <div class="emoji">📈</div>
+                    <h2>Progresso Visível</h2>
+                    <p>Heatmap, estatísticas e journal diário pra ver sua evolução.</p>
                 </div>
             </div>
-        </div>
 
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-8">
-                <button onclick="prevSlide()" class="text-gray-400 hover:text-white">← Anterior</button>
-                <div class="flex gap-2">
-                    <div onclick="goToSlide(1)" class="w-3 h-3 bg-cyan-400 rounded-full cursor-pointer" id="dot1"></div>
-                    <div onclick="goToSlide(2)" class="w-3 h-3 bg-gray-600 rounded-full cursor-pointer" id="dot2"></div>
-                    <div onclick="goToSlide(3)" class="w-3 h-3 bg-gray-600 rounded-full cursor-pointer" id="dot3"></div>
-                    <div onclick="goToSlide(4)" class="w-3 h-3 bg-gray-600 rounded-full cursor-pointer" id="dot4"></div>
+            <div class="onboarding-controls">
+                <button onclick="prevSlide()" class="btn-secondary">Anterior</button>
+                <div class="dots">
+                    <span onclick="goToSlide(1)" class="dot active" id="dot1"></span>
+                    <span onclick="goToSlide(2)" class="dot" id="dot2"></span>
+                    <span onclick="goToSlide(3)" class="dot" id="dot3"></span>
+                    <span onclick="goToSlide(4)" class="dot" id="dot4"></span>
                 </div>
-                <button onclick="nextSlide()" class="text-cyan-400 hover:text-cyan-300 font-medium">Próximo →</button>
+                <button onclick="nextSlide()" class="btn-secondary">Próximo</button>
             </div>
-            
-            <button onclick="finishOnboarding()" 
-                    class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-3xl text-lg transition-all">
-                Entrar no Habitus
-            </button>
+
+            <div class="onboarding-actions">
+                <button onclick="skipOnboarding()" class="btn-skip">Pular</button>
+                <button onclick="finishOnboarding()" class="btn-primary">Entrar no Habitus</button>
+            </div>
         </div>
     </div>
 
-    <!-- TELA PRINCIPAL -->
-    <div id="main-app" class="hidden min-h-screen pb-20">
-        <!-- Header -->
-        <header class="bg-gradient-to-r from-slate-900 to-zinc-900 py-6 px-6 text-center">
-            <h1 class="text-4xl font-bold tracking-tighter neon">Habitus</h1>
-            <div class="mt-3 flex justify-center items-center gap-3 text-xl">
-                <span class="text-orange-400">🔥</span>
-                <span id="streak-main" class="font-semibold">0 dias de streak</span>
+    <!-- App Principal -->
+    <div id="main-app" class="hidden">
+        <header>
+            <h1>Habitus</h1>
+            <div class="streak">
+                <i class="fa-solid fa-fire"></i>
+                <span id="streak-count">12</span> dias de fogo
             </div>
-            <p id="greeting-main" class="text-gray-400 mt-1">Vamos construir hábitos fortes hoje</p>
+            <p id="greeting">Vamos construir hábitos fortes hoje 🔥</p>
         </header>
 
-        <div class="max-w-xl mx-auto px-5 py-6">
+        <main class="container">
             <!-- Progresso -->
-            <div class="bg-zinc-900 rounded-3xl p-6 mb-8 border border-zinc-800">
-                <h2 class="font-semibold mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-line"></i> Progresso Hoje</h2>
-                <div class="h-4 bg-zinc-800 rounded-2xl overflow-hidden">
-                    <div id="progress-bar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-teal-400 transition-all"></div>
+            <div class="card">
+                <h2>Progresso de Hoje</h2>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                <div class="flex justify-between mt-3 text-sm">
-                    <span>XP Hoje: <span id="xp-today" class="text-cyan-400 font-bold">0</span></span>
-                    <span>Level <span id="level" class="font-bold">1</span></span>
+                <div class="progress-info">
+                    <span>XP Hoje: <strong id="xp-today">0</strong></span>
+                    <span>Level <strong id="level">1</strong></span>
                 </div>
             </div>
 
             <!-- Tarefas -->
-            <div class="bg-zinc-900 rounded-3xl p-6 mb-8 border border-zinc-800">
-                <div class="flex justify-between mb-5">
-                    <h2 class="text-2xl font-semibold">Rotina de Hoje</h2>
-                    <button onclick="addTask()" class="bg-cyan-500 text-black px-5 py-2 rounded-2xl font-bold flex items-center gap-2 hover:bg-cyan-400">
-                        <i class="fa-solid fa-plus"></i> Nova
+            <div class="card">
+                <div class="card-header">
+                    <h2>Rotina de Hoje</h2>
+                    <button onclick="addTask()" class="btn-add">
+                        <i class="fa-solid fa-plus"></i> Nova Tarefa
                     </button>
                 </div>
-                <div id="task-list" class="space-y-4"></div>
+                <div id="task-list" class="task-list"></div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="grid grid-cols-3 gap-4">
-                <button onclick="startPomodoro()" class="bg-zinc-900 border border-teal-500 hover:border-teal-400 p-5 rounded-3xl text-center transition-all">
-                    <i class="fa-solid fa-hourglass text-3xl text-teal-400 mb-2"></i>
-                    <p class="font-medium text-sm">Pomodoro</p>
+            <!-- Ações rápidas -->
+            <div class="quick-actions">
+                <button onclick="startPomodoro()" class="quick-btn">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span>Pomodoro</span>
                 </button>
-                <button onclick="showHeatmap()" class="bg-zinc-900 border border-emerald-500 hover:border-emerald-400 p-5 rounded-3xl text-center transition-all">
-                    <i class="fa-solid fa-calendar text-3xl text-emerald-400 mb-2"></i>
-                    <p class="font-medium text-sm">Heatmap</p>
+                <button onclick="showHeatmap()" class="quick-btn">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Heatmap</span>
                 </button>
-                <button onclick="alert('Journal em desenvolvimento')" class="bg-zinc-900 border border-amber-500 hover:border-amber-400 p-5 rounded-3xl text-center transition-all">
-                    <i class="fa-solid fa-pen text-3xl text-amber-400 mb-2"></i>
-                    <p class="font-medium text-sm">Journal</p>
-                </button>
-            </div>
-        </div>
-
-        <!-- Navegação inferior -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-zinc-800 py-3">
-            <div class="max-w-xl mx-auto flex justify-around text-xs">
-                <button onclick="switchTab(0)" class="flex flex-col items-center text-cyan-400">
-                    <i class="fa-solid fa-house text-xl"></i>
-                    <span>Home</span>
-                </button>
-                <button onclick="switchTab(1)" class="flex flex-col items-center text-gray-400 hover:text-white">
-                    <i class="fa-solid fa-list-check text-xl"></i>
-                    <span>Tarefas</span>
-                </button>
-                <button onclick="switchTab(2)" class="flex flex-col items-center text-gray-400 hover:text-white">
-                    <i class="fa-solid fa-fire text-xl"></i>
-                    <span>Streak</span>
+                <button onclick="openJournal()" class="quick-btn">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Journal</span>
                 </button>
             </div>
-        </nav>
+        </main>
     </div>
 
-    <script>
-        // Onboarding
-        let currentSlide = 1;
-        const totalSlides = 4;
-
-        function showSlide(n) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById(`slide${n}`).classList.add('active');
-            document.querySelectorAll('[id^="dot"]').forEach((dot, i) => {
-                dot.classList.toggle('bg-cyan-400', i+1 === n);
-                dot.classList.toggle('bg-gray-600', i+1 !== n);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = currentSlide < totalSlides ? currentSlide + 1 : totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = currentSlide > 1 ? currentSlide - 1 : 1;
-            showSlide(currentSlide);
-        }
-
-        function goToSlide(n) {
-            currentSlide = n;
-            showSlide(n);
-        }
-
-        function finishOnboarding() {
-            localStorage.setItem('habitus_onboarded', 'true');
-            document.getElementById('onboarding').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-            initApp();
-        }
-
-        // App principal
-        let tasks = JSON.parse(localStorage.getItem('habitus_tasks')) || [];
-        let xp = parseInt(localStorage.getItem('habitus_xp')) || 0;
-        let streak = 12; // exemplo inicial
-
-        function initApp() {
-            document.getElementById('streak-main').textContent = `${streak} dias de streak`;
-            document.getElementById('greeting-main').textContent = "Vamos construir hábitos fortes hoje 🔥";
-            updateProgress();
-            renderTasks();
-        }
-
-        function updateProgress() {
-            const completed = tasks.filter(t => t.completed).length;
-            const total = tasks.length || 1;
-            const percent = Math.round((completed / total) * 100);
-            document.getElementById('progress-bar').style.width = `${percent}%`;
-            document.getElementById('xp-today').textContent = xp % 500;
-            document.getElementById('level').textContent = Math.floor(xp / 500) + 1;
-        }
-
-        function renderTasks() {
-            const container = document.getElementById('task-list');
-            container.innerHTML = tasks.length ? '' : '<p class="text-gray-500 text-center py-8">Nenhuma tarefa ainda. Adicione uma acima!</p>';
-
-            tasks.forEach((task, i) => {
-                const div = document.createElement('div');
-                div.className = `flex items-center gap-4 bg-zinc-800 p-5 rounded-2xl border border-zinc-700 transition-all ${task.completed ? 'opacity-70 line-through' : ''}`;
-                div.innerHTML = `
-                    <input type="checkbox" \( {task.completed ? 'checked' : ''} class="w-6 h-6 accent-emerald-400" onchange="toggleTask( \){i})">
-                    <div class="flex-1">
-                        <p>${task.title}</p>
-                        \( {task.time ? `<p class="text-xs text-gray-500"> \){task.time}</p>` : ''}
-                    </div>
-                    <span class="text-emerald-400 font-bold">+${task.xp || 25}xp</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function toggleTask(i) {
-            tasks[i].completed = !tasks[i].completed;
-            if (tasks[i].completed) xp += tasks[i].xp || 25;
-            localStorage.setItem('habitus_tasks', JSON.stringify(tasks));
-            localStorage.setItem('habitus_xp', xp);
-            updateProgress();
-            renderTasks();
-        }
-
-        function addTask() {
-            const title = prompt("Qual a tarefa?");
-            if (!title) return;
-            const time = prompt("Horário (opcional)") || "";
-            tasks.push({title, time, completed: false, xp: 25});
-            localStorage.setItem('habitus_tasks', JSON.stringify(tasks));
-            renderTasks();
-            updateProgress();
-        }
-
-        function startPomodoro() {
-            alert("Pomodoro iniciado! (Timer completo em breve com 25min + pausa)");
-        }
-
-        function showHeatmap() {
-            alert("Heatmap de consistência (em desenvolvimento - vai mostrar os dias verdes)");
-        }
-
-        function switchTab(n) {
-            alert("Navegação por abas em breve - por enquanto estamos na Home");
-        }
-
-        // Verifica se já passou pelo onboarding
-        if (localStorage.getItem('habitus_onboarded') === 'true') {
-            document.getElementById('onboarding').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-            initApp();
-        } else {
-            showSlide(1);
-        }
-
-        // PWA
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-    </script>
+    <script src="app.js"></script>
 </body>
-          </html>
+</html>
